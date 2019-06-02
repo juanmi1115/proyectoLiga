@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * Clase Entrenador.
- * Esta clase extiende de la clase Descripci√≥n y adem√°s asignaremos a cada 
+ * Esta clase extiende de la clase DescripciÛn y adem·s asignaremos a cada 
  * entrenador un potenciador.
  * @author juanmi
  */
@@ -17,7 +17,7 @@ public class Entrenador extends Persona{
     private float potPrecision; //Aqui guardamos el potenciador de precisi√≥n del entrenador.
     private float potTecnica; //Aqui guardamos el potenciador de t√©cnica del entrenador.
 
-    
+    //Aqui asignamos de manera aleatoria lal caracteristicas del entrenador
     public Entrenador(){
         super();
         Random aleatorio = new Random();
@@ -84,7 +84,8 @@ public class Entrenador extends Persona{
     public void setPotTecnica(float potTecnica) {
         this.potTecnica = potTecnica;
     }
-
+    
+    //FunciÛn toString para leer Entrenador
     @Override
     public String toString() {
         return  "\n"+

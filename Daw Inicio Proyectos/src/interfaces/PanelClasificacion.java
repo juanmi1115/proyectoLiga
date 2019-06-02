@@ -24,86 +24,108 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.net.URL;
+import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import java.awt.SystemColor;
 
-public class PanelClasificacion extends JPanel{
+public class PanelClasificacion extends JPanel implements Serializable{
 	private Ventana ventana;
 	private JTable table;
 	private Equipo equipo;
-	
+
 	
 	public PanelClasificacion(Ventana v){
 		super();
 		this.ventana = v;
-		setBackground(new Color(135, 206, 250));
-		setSize(769,600);
+		initComponents();
+
+	}
+
+		public void initComponents() {
+			
+
+		setBackground(SystemColor.textHighlight);
+		
+		setSize(800,550);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setForeground(new Color(204, 255, 255));
 		scrollPane.setBackground(Color.GREEN);
 		
 		JLabel lblClasificacin = new JLabel("CLASIFICACIÓN");
+		lblClasificacin.setForeground(new Color(153, 255, 255));
 		lblClasificacin.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 30));
 		
-		JButton botonSiguienteJornada = new JButton("Siguiente Jornada");
-		botonSiguienteJornada.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			       ventana.irAJornada();
+		Comparator<Equipo> comparator = new Comparator<Equipo>() {
+			public int compare(Equipo a, Equipo b) {
+
+				int resultado = Integer.compare(a.getPuntos(), b.getPuntos());
+				if (resultado != 0) {
+					return resultado;
+				}
+
+				resultado = Integer.compare(a.getGF() - a.getGC(),
+						b.getGF() - b.getGC());
+				if (resultado != 0) {
+					return resultado;
+				}
+
+				return resultado;
+
 			}
-			
-		});
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(botonSiguienteJornada, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGap(249)
-							.addComponent(lblClasificacin, GroupLayout.PREFERRED_SIZE, 269, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGap(48)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 620, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(101, Short.MAX_VALUE)));
-				
-				
-		
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(36)
-					.addComponent(lblClasificacin, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-					.addGap(57)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 312, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-					.addComponent(botonSiguienteJornada, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addGap(42))
-		);
+		};
 		
 		table = new JTable();
 		table.setRowHeight(25);
+		Object[][] clas=new Object[10][];
+		Iterator itEquipos=ventana.getLigaSantander().getEquipo().entrySet().iterator();
+		int numEquipo=0;
+		while(itEquipos.hasNext()) {
+			Equipo e=((Equipo)((Entry)itEquipos.next()).getValue());
+			String nombre=e.getNombre();
+			int puntos = e.getPuntos();	
+			int V = e.getV();
+			int E = e.getE();
+			int D = e.getD();
+			int GF = e.getGF();
+			int GC = e.getGC();
+			int PJ = e.getPartidosJugados();
+			
+			
+			if(e.equals(ventana.getMiEquipo())) {
+				nombre="<html><body><b>"+nombre+"</b></body></html>";
+
+			}
+			
+			
+			clas[numEquipo]= new Object[]{numEquipo,nombre,puntos,V,E,D,GF,GC,PJ};
+			numEquipo++;
+		}
 		
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{1,"REAL MADRID C.F", "-", "-", "-", "-", "-", "-", "-"},
-				{2, "F.C BARCELONA", "-", "-", "-", "-", "-", "-", "-"},
-				{3, "MÁLAGA C.F", "-", "-", "-", "-", "-", "-", "-"},
-				{4, "CELTA F.C", "-", "-", "-", "-", "-", "-", "-"},
-				{5, "SEVILLA F.C", "-", "-", "-", "-", "-", "-", "-"},
-				{6, "REAL BETIS B", "-", "-", "-", "-", "-", "-", "-"},
-				{7, "ESPANYOL F.C", "-", "-", "-", "-", "-", "-", "-"},
-				{8, "ATHLETIC", "-", "-", "-", "-", "-", "-", "-"},
-				{9, "ATLÉTICO", "-", "-", "-", "-", "-", "-", "-"},
-				{10, "VALENCIA F.C", "-", "-", "-", "-", "-", "-", "-"},
-			},
+				clas,
 			new String[] {
-				"POS", "EQUIPO", "PJ", "V", "E", "D", "GF", "GC", "DIF"
+				"POS", "EQUIPO", "Puntos", "V", "E", "D", "GF", "GC", "PJ"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(45);
@@ -116,13 +138,62 @@ public class PanelClasificacion extends JPanel{
 		table.getColumnModel().getColumn(7).setPreferredWidth(40);
 		table.getColumnModel().getColumn(8).setPreferredWidth(40);
 		scrollPane.setViewportView(table);
+		
+		
+		
+		
+		
+		JButton botonSiguienteJornada = new JButton("");
+		botonSiguienteJornada.setIcon(new ImageIcon(PanelClasificacion.class.getResource("/interfaces/Forwardarrow_262.png")));
+		botonSiguienteJornada.setBorderPainted(false);
+		botonSiguienteJornada.setContentAreaFilled(false);
+		botonSiguienteJornada.setBorder(null);
+		botonSiguienteJornada.setPreferredSize(new Dimension(120, 120));
+		botonSiguienteJornada.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {			
+			    ventana.repintarPanelJornada();   
+				ventana.irAJornada();
+				}	
+		});
+		
+		
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(295, Short.MAX_VALUE)
+					.addComponent(lblClasificacin, GroupLayout.PREFERRED_SIZE, 269, GroupLayout.PREFERRED_SIZE)
+					.addGap(236))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(100)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 620, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(80, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(637, Short.MAX_VALUE)
+					.addComponent(botonSiguienteJornada, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
+					.addGap(32))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblClasificacin, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 277, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(botonSiguienteJornada, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+		);
 		setLayout(groupLayout);
+		
+
 		
 		setVisible(true);
 		
+		}
 		
-	}
+}
 	
 
 	     
-}
+

@@ -13,10 +13,10 @@ public class Principal extends JPanel{
 		super();
 		ventana=v;
 		setLayout(null);
-		MiLabel lblHola = new MiLabel
-		("Hola ,"+ventana.getUsuario().getNombre(),30);
-		lblHola.setBounds(10, 11, 430, 42);
-		add(lblHola);
+		//MiLabel lblHola = new MiLabel
+		//("Hola ,"+ventana.getUsuario().getNombre(),30);
+		//lblHola.setBounds(10, 11, 430, 42);
+		//add(lblHola);
 		this.ventana.setSize(400,400);
 	}
 }

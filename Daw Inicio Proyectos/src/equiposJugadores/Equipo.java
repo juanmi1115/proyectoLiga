@@ -13,6 +13,13 @@ public class Equipo {
     private Estadio estadio; //Aqui guardamos el estadio del equipo.
     private Entrenador entrenador; //Aqui guardamos el entrenador del equipo.
     private ArrayList<Jugador> jugadores; //En este array se guardan los jugadores del equipo.
+    private int puntos;
+    private int V;
+    private int E;
+    private int D;
+    private int GF;
+    private int GC;
+    private int PJ;
 
     public Equipo(String nombre, Caracteristicas caracPrincipal, Estadio estadio, Entrenador entrenador, ArrayList<Jugador> jugadores) {
         this.nombre = nombre;
@@ -73,18 +80,83 @@ public class Equipo {
     public void setJugadores(ArrayList<Jugador> jugadores) {
         this.jugadores = jugadores;
     }
+    
 
-  
+    public int getPuntos() {
+		return puntos;
+	}
 
-    @Override
+	public int getV() {
+		return V;
+	}
+
+	public int getE() {
+		return E;
+	}
+
+	public int getD() {
+		return D;
+	}
+
+	public int getGF() {
+		return GF;
+	}
+
+	public int getGC() {
+		return GC;
+	}
+	
+	public void sumarVictoria() {
+		puntos += 3;
+		V++;
+	}
+
+	public void sumarEmpate() {
+		puntos++;
+		E++;
+	}
+	
+	public void sumarDerrota() {
+		this.D++;
+	}
+
+	public void sumarGolAFavor() {
+		this.GF++;
+	}
+
+	public void sumarGolEnContra() {
+		this.GC++;
+	}
+	public void sumarPartidosJugados() {
+		this.PJ++;
+		
+	}
+	public int getPartidosJugados() {
+		return PJ;
+	}
+	
+	
+
+	
+
+	/**
+	 * @return the difGoles
+	 */
+	//public int getDifGoles() {
+	//	return this.getGolesAFavor()-this.golesEnContra;
+	//}
+
+
+	@Override
     public String toString() {
-        return "\n"+
+       /* return "\n"+
                "Equipo: " + this.nombre +"\n"
                +"Caracteristica Principal: " + this.caracPrincipal +"\n"
                +"Estadio: " + this.getEstadio() +"\n"
                +"Entrenador: " + this.entrenador +"\n"
                +"jugadores: " + this.jugadores+"\n"
-               +"/--------------------------------------------/";
+               +"/--------------------------------------------/";*/
+		return this.nombre+this.puntos;
     }
     
 

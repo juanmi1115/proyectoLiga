@@ -10,16 +10,16 @@ import java.util.Random;
 public class Persona {
     private String nombre; //nombre del jugador o entrenador.
     private String apellido; //Apellido del jugador o entrenador.
-    private static final String [] nombres = {"Juan","Paco","Pepe","Mateo","Miguel","Fabián","Antonio","Lolo","Andrés","Ramón","Cristiano","Leo","Karim","Pedro",
-                             "Salvio","Eden","Lucas","Bartólo","Eustaquio","Agustin","Aleix","Michel","Joaquín","Isco","Luka","Paul","Raúl",
+    private static final String [] nombres = {"Juan","Paco","Pepe","Mateo","Miguel","Fabian","Antonio","Lolo","Andres","Ramon","Cristiano","Leo","Karim","Pedro",
+                             "Salvio","Eden","Lucas","Bartolo","Eustaquio","Agustin","Aleix","Michel","Joaquin","Isco","Luka","Paul","Raul",
                              "Fernando","Ter","Luis","Malcolm","Javier","Arturo","Daniel","Eusebio","Alfredo","Jesús","Keylor","Sergio",
-                             "Rafael","Álvaro","Jaime","Xavier","Timo","Thibaut","Vinicius","David","Manolo","Teo","Mario"};
+                             "Rafael","Alvaro","Jaime","Xavier","Timo","Thibaut","Vinicius","David","Manolo","Teo","Mario"};
     
-    private static final String [] apellidos = {"De Luiz","Ramos","Suárez","Messi","Ronaldo","Kroos","Courtois","Navas","González","Moura","Varane","De Gea",
-                               "Torres","Hernández","Coutinho","Dembélé","Hazard","Sánchez","Ontiveros","Pogba","Di Stefano","Iniesta","Salgado",
-                               "Gaitán","Téllez","Vidal","Junior","Morata","Modric","Aureola","Benzema","Alarcón","Pacheco","Caballero",
-                               "Pérez","Martín","Fernández","Bravo","Vargas","Stegen","Jiménez","Valderrama","Cortés","Martínez","Rabiot",
-                               "López","Verrati","Casillas","Reina","Puskas"};
+    private static final String [] apellidos = {"De Luiz","Ramos","Suarez","Messi","Ronaldo","Kroos","Courtois","Navas","Gonzalez","Moura","Varane","De Gea",
+                               "Torres","Hernández","Coutinho","Dembele","Hazard","Sanchez","Ontiveros","Pogba","Di Stefano","Iniesta","Salgado",
+                               "Gaitan","Tellez","Vidal","Junior","Morata","Modric","Aureola","Benzema","Alarcon","Pacheco","Caballero",
+                               "Perez","Martin","Fernandez","Bravo","Vargas","Stegen","Jiménez","Valderrama","Cortes","Martinez","Rabiot",
+                               "Lopez","Verrati","Casillas","Reina","Puskas"};
     
     public Persona(){
         //AquÃ­ introduzco el paquete Random, para seleccionar objetos aleatoriamente.

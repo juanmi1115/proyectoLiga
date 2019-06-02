@@ -15,6 +15,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -32,13 +36,17 @@ import equiposJugadores.Estadio;
 
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
+
+import competiciones.Jornada;
+import competiciones.Liga;
+import competiciones.Partido;
+
 import java.awt.Cursor;
 
 public class PanelInicio extends JPanel {
 	private Ventana ventana;
 	private Image imagenFondo;
 	private URL fondo;
-	
 	
 	public PanelInicio(Ventana v) {
 		super();
@@ -48,53 +56,22 @@ public class PanelInicio extends JPanel {
 		setBackground(new Color(150, 200, 150));
 		setLayout(null);
 		
+		
+	      
 		BotonNuevaPartida botonNuevaPartida = new BotonNuevaPartida("Nueva Partida");
 		
 		botonNuevaPartida.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String [][]matrizCampo = new String [3][4];
-			       
-			       Estadio rosaleda = new Estadio("La Rosaleda",matrizCampo);
-			       Estadio bernabeu = new Estadio("Santiago Bernabeu",matrizCampo);
-			       Estadio camp = new Estadio("Camp Nou",matrizCampo);
-			       Estadio villa = new Estadio("Benito Villamarín",matrizCampo);
-			       Estadio pizjuan = new Estadio("Sánchez Pizjuán",matrizCampo);
-			       Estadio carmenes= new Estadio("Los Cármenes",matrizCampo);
-			       Estadio carranza = new Estadio("Nuevo Carranza",matrizCampo);
-			       Estadio wanda = new Estadio("Wanda Metropolitano",matrizCampo);
-			       Estadio mestalla = new Estadio("Mestalla",matrizCampo);
-			       Estadio arcangel = new Estadio("Nuevo Arcángel",matrizCampo);
-				   
-			       
-			       
-			       ventana.setEquipos(new HashMap<String,Equipo>());
-			       ventana.getEquipos().put("REAL MADRID C.F", new Equipo("REAL MADRID C.F", RESISTENCIA, bernabeu));
-			       ventana.getEquipos().put("F.C BARCELONA", new Equipo("F.C BARCELONA", VELOCIDAD, camp));
-			       ventana.getEquipos().put("MÁLAGA C.F", new Equipo("MÁLAGA C.F", TECNICA, rosaleda));
-			       ventana.getEquipos().put("REAL BETIS B", new Equipo("REAL BETIS B", RESISTENCIA, villa));
-			       ventana.getEquipos().put("SEVILLA F.C", new Equipo("SEVILLA F.C", PRECISION, pizjuan));
-			       ventana.getEquipos().put("ESPANYOL F.C", new Equipo("ESPANYOL F.C", TECNICA, carmenes));
-			       ventana.getEquipos().put("CELTA F.C", new Equipo("CELTA F.C", FUERZA, carranza));
-			       ventana.getEquipos().put("ATLÉTICO", new Equipo("ATLÉTICO", TECNICA, wanda));
-			       ventana.getEquipos().put("VALENCIA F.C", new Equipo("VALENCIA F.C", VELOCIDAD, mestalla));
-			       ventana.getEquipos().put("ATHLETIC", new Equipo("ATHLETIC", PRECISION, arcangel));
-				   
-			       ventana.irASeleccionEquipo();
+				
+				   ventana.irASeleccionEquipo();
+    
 			}
 		});
-		botonNuevaPartida.setBounds(129, 369, 199, 63);
+		botonNuevaPartida.setBounds(91, 150, 199, 63);
 		add(botonNuevaPartida);
 		
-		BotonNuevaPartida btnRegistro = new BotonNuevaPartida("Cargar Partida");
-		btnRegistro.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ventana.irARegistro();
-			}
-		});
-		btnRegistro.setBounds(391, 369, 199, 63);
-		add(btnRegistro);
+
 		
 		
 		
@@ -119,7 +96,5 @@ public class PanelInicio extends JPanel {
 		g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
 		
 	}
-
-	
 	
 }
